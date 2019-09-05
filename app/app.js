@@ -17,12 +17,19 @@ import FontFaceObserver from 'fontfaceobserver';
 import history from 'utils/history';
 import 'sanitize.css/sanitize.css';
 
-// Import root app
-import App from 'containers/App';
+// Material UI
+import { ThemeProvider } from '@material-ui/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { orange, blue } from '@material-ui/core/colors';
 
 // Import Language Provider
 import LanguageProvider from 'containers/LanguageProvider';
 
+// Import root app
+import App from './containers/App';
+
+import Auth0Provider from './containers/Auth';
+import authConfig from './auth_config';
 // Load the favicon and the .htaccess file
 import '!file-loader?name=[name].[ext]!./images/favicon.ico';
 import 'file-loader?name=.htaccess!./.htaccess'; // eslint-disable-line import/extensions
@@ -46,14 +53,40 @@ const initialState = {};
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
 
+const theme = createMuiTheme({
+  palette: {
+    primary: blue,
+    secondary: orange,
+  },
+});
+
+const onRedirectCallback = appState => {
+  window.history.replaceState(
+    {},
+    document.title,
+    appState && appState.targetUrl
+      ? appState.targetUrl
+      : window.location.pathname,
+  );
+};
+
 const render = messages => {
   ReactDOM.render(
     <Provider store={store}>
-      <LanguageProvider messages={messages}>
-        <ConnectedRouter history={history}>
-          <App />
-        </ConnectedRouter>
-      </LanguageProvider>
+      <Auth0Provider
+        domain={authConfig.domain}
+        client_id={authConfig.clientId}
+        redirect_uri={window.location.origin}
+        onRedirectCallback={onRedirectCallback}
+      >
+        <LanguageProvider messages={messages}>
+          <ConnectedRouter history={history}>
+            <ThemeProvider theme={theme}>
+              <App />
+            </ThemeProvider>
+          </ConnectedRouter>
+        </LanguageProvider>
+      </Auth0Provider>
     </Provider>,
     MOUNT_NODE,
   );

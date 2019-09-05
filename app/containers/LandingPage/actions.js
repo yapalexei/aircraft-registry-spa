@@ -1,5 +1,5 @@
 /*
- * App Actions
+ * Landing Actions
  *
  * Actions change things in your application
  * Since this boilerplate uses a uni-directional data flow, specifically redux,
@@ -14,19 +14,3 @@
  *        return { type: YOUR_ACTION_CONSTANT, var: var }
  *    }
  */
-
-import { SET_USER, SET_IS_AUTHENTICATED } from './constants';
-
-export function setUserAction(user) {
-  return {
-    type: SET_USER,
-    user,
-  };
-}
-
-export function setIsAuthenticatedAction(isAuthenticated) {
-  return {
-    type: SET_IS_AUTHENTICATED,
-    isAuthenticated,
-  };
-}
