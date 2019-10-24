@@ -6,8 +6,42 @@ import { createSelector } from 'reselect';
 import { initialState } from './reducer';
 
 const selectGlobal = state => state.global || initialState;
-
 const selectRouter = state => state.router;
+const makeSelectFetchFailReason = () =>
+  createSelector(
+    selectGlobal,
+    globalState => globalState.failedToGetCollectionReason,
+  );
+
+const makeSelectIsPristine = () =>
+  createSelector(
+    selectGlobal,
+    globalState => globalState.pristine,
+  );
+
+const makeSelectToken = () =>
+  createSelector(
+    selectGlobal,
+    globalState => globalState.token,
+  );
+
+const makeSelectCollection = () =>
+  createSelector(
+    selectGlobal,
+    globalState => globalState.collection,
+  );
+
+const makeSelectCollectionName = () =>
+  createSelector(
+    selectGlobal,
+    globalState => globalState.collectionName,
+  );
+
+const makeSelectFetchingCollection = () =>
+  createSelector(
+    selectGlobal,
+    globalState => globalState.fetchingCollection,
+  );
 
 const makeSelectIsAuthenticated = () =>
   createSelector(
@@ -40,10 +74,16 @@ const makeSelectLocation = () =>
   );
 
 export {
+  makeSelectFetchFailReason,
+  makeSelectIsPristine,
+  makeSelectToken,
+  makeSelectCollection,
+  makeSelectCollectionName,
   makeSelectIsAuthenticated,
   makeSelectUser,
   selectGlobal,
   makeSelectLoading,
   makeSelectError,
   makeSelectLocation,
+  makeSelectFetchingCollection,
 };

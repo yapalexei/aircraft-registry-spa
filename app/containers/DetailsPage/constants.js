@@ -8,25 +8,8 @@
  * Follow this format:
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
-export const collectionTypes = [
-  {
-    label: 'Operators',
-    value: 'operators',
-    single: 'operators',
-  },
-  {
-    label: 'Pilots',
-    value: 'pilots',
-    single: 'pilots',
-  },
-  {
-    label: 'Aircraft',
-    value: 'aircrafts',
-    single: 'aircraft',
-  },
-  {
-    label: 'Contacts',
-    value: 'contacts',
-    single: 'contacts',
-  },
-];
+
+export const FETCH_DETAILS = 'airegister/Details/FETCH_DETAILS';
+export const FAILED_FETCHING_DETAILS =
+  'airegister/Details/FAILED_FETCHING_DETAILS';
+export const GOT_DETAILS = 'airegister/Details/GOT_DETAILS';

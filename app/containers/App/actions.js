@@ -15,7 +15,44 @@
  *    }
  */
 
-import { SET_USER, SET_IS_AUTHENTICATED } from './constants';
+import {
+  SET_USER,
+  SET_IS_AUTHENTICATED,
+  FETCH_COLLECTION,
+  GOT_COLLECTION,
+  FAILED_FETCH_COLLECTION,
+  SET_TOKEN,
+  CLEAR_COLLECTION,
+} from './constants';
+
+export function setAuthTokenAction(token) {
+  return {
+    type: SET_TOKEN,
+    token,
+  };
+}
+
+export function failedToGetCollection(reason) {
+  return {
+    type: FAILED_FETCH_COLLECTION,
+    reason,
+  };
+}
+
+export function gotCollection(data) {
+  return {
+    type: GOT_COLLECTION,
+    data,
+  };
+}
+
+export function fetchCollection(name, filterString) {
+  return {
+    type: FETCH_COLLECTION,
+    name,
+    filterString,
+  };
+}
 
 export function setUserAction(user) {
   return {
@@ -28,5 +65,11 @@ export function setIsAuthenticatedAction(isAuthenticated) {
   return {
     type: SET_IS_AUTHENTICATED,
     isAuthenticated,
+  };
+}
+
+export function clearCollectionAction() {
+  return {
+    type: CLEAR_COLLECTION,
   };
 }

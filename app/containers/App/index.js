@@ -12,6 +12,7 @@ import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
 
 import LandingPage from '../LandingPage/Loadable';
+import DetailsPage from '../DetailsPage/Loadable';
 import NotFoundPage from '../NotFoundPage/Loadable';
 
 import { useAuth0 } from '../Auth';
@@ -20,7 +21,8 @@ import GlobalStyle from '../../global-styles';
 import LoadingIndicator from '../../components/LoadingIndicator';
 
 const AppWrapper = styled.div`
-  max-width: calc(768px + 16px * 2);
+  width: 100%;
+  // max-width: calc(768px + 16px * 2);
   margin: 0 auto;
   display: flex;
   min-height: 100%;
@@ -47,6 +49,56 @@ export default function App() {
       ) : (
         <Switch>
           <Route exact path="/" component={LandingPage} />
+          <Route
+            exact
+            path="/operators/:uuid"
+            component={props => (
+              <DetailsPage routeType="operators" {...props} />
+            )}
+          />
+          <Route
+            exact
+            path="/operators/:uuid/privilaged"
+            component={props => (
+              <DetailsPage privilaged routeType="operators" {...props} />
+            )}
+          />
+          <Route
+            exact
+            path="/aircraft/:uuid"
+            component={props => <DetailsPage routeType="aircraft" {...props} />}
+          />
+          <Route
+            exact
+            path="/aircraft/:uuid/privilaged"
+            component={props => (
+              <DetailsPage privilaged routeType="aircraft" {...props} />
+            )}
+          />
+          <Route
+            exact
+            path="/contacts/:uuid"
+            component={props => <DetailsPage routeType="contacts" {...props} />}
+          />
+          <Route
+            exact
+            path="/contacts/:uuid/privilaged"
+            component={props => (
+              <DetailsPage privilaged routeType="contacts" {...props} />
+            )}
+          />
+          <Route
+            exact
+            path="/pilots/:uuid"
+            component={props => <DetailsPage routeType="pilots" {...props} />}
+          />
+          <Route
+            exact
+            path="/pilots/:uuid/privilaged"
+            component={props => (
+              <DetailsPage privilaged routeType="pilots" {...props} />
+            )}
+          />
           <Route path="" component={NotFoundPage} />
         </Switch>
       )}

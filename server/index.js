@@ -1,6 +1,8 @@
 /* eslint consistent-return:0 import/order:0 */
 
 const express = require('express');
+const proxy = require('express-http-proxy');
+const bodyParser = require('body-parser');
 const logger = require('./logger');
 
 const argv = require('./argv');
@@ -14,9 +16,19 @@ const ngrok =
 const { resolve } = require('path');
 const app = express();
 
-// If you need a backend, e.g. an API, add your custom backend-specific middleware here
-// app.use('/api', myApi);
+const API = 'https://aircraftregistry.herokuapp.com';
 
+// If you need a backend, e.g. an API, add your custom backend-specific middleware here
+app.use(bodyParser.json()); // for parsing application/json
+app.all(
+  '/api/v1/*',
+  proxy(API, {
+    proxyReqOptDecorator: proxyReqOpts => {
+      console.log(proxyReqOpts.method, '->', `${API}${proxyReqOpts.path}`);
+      return proxyReqOpts;
+    },
+  }),
+);
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {
   outputPath: resolve(process.cwd(), 'build'),

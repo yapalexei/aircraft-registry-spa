@@ -78,6 +78,8 @@ const render = messages => {
         client_id={authConfig.clientId}
         redirect_uri={window.location.origin}
         onRedirectCallback={onRedirectCallback}
+        scope={authConfig.scopes.join(' ')}
+        audience={authConfig.audience}
       >
         <LanguageProvider messages={messages}>
           <ConnectedRouter history={history}>

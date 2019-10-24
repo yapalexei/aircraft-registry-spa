@@ -4,7 +4,11 @@ import { compose } from 'redux';
 import PropTypes from 'prop-types';
 import createAuth0Client from '@auth0/auth0-spa-js';
 import { createStructuredSelector } from 'reselect';
-import { setUserAction, setIsAuthenticatedAction } from '../App/actions';
+import {
+  setUserAction,
+  setIsAuthenticatedAction,
+  setAuthTokenAction,
+} from '../App/actions';
 import { makeSelectIsAuthenticated } from '../App/selectors';
 
 const DEFAULT_REDIRECT_CALLBACK = () =>
@@ -19,6 +23,7 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = dispatch => ({
   setStoreUser: user => dispatch(setUserAction(user)),
   setIsAuthenticated: auth => dispatch(setIsAuthenticatedAction(auth)),
+  setAuthToken: token => dispatch(setAuthTokenAction(token)),
 });
 
 export const Auth0Provider = ({
@@ -27,16 +32,27 @@ export const Auth0Provider = ({
   setStoreUser,
   setIsAuthenticated,
   isAuthenticated,
+  setAuthToken,
   ...initOptions
 }) => {
   const [user, setUser] = useState();
   const [auth0Client, setAuth0] = useState();
   const [loading, setLoading] = useState(true);
   const [popupOpen, setPopupOpen] = useState(false);
+
+  async function saveToken(auth0FromHook) {
+    if (await auth0FromHook.isAuthenticated()) {
+      const tokenSilently = await auth0FromHook.getTokenSilently(initOptions);
+      setAuthToken(tokenSilently);
+    }
+  }
+
   useEffect(() => {
     const initAuth0 = async () => {
       const auth0FromHook = await createAuth0Client(initOptions);
+      saveToken(auth0FromHook);
       setAuth0(auth0FromHook);
+
       if (window.location.search.includes('code=')) {
         const authRes = await auth0FromHook.handleRedirectCallback();
         onRedirectCallback(authRes.appState);
@@ -57,30 +73,38 @@ export const Auth0Provider = ({
     // eslint-disable-next-line
   }, []);
 
-  const loginWithPopup = async (params = {}) => {
+  const loginWithPopup = async params => {
     setPopupOpen(true);
     try {
-      await auth0Client.loginWithPopup(params);
+      await auth0Client.loginWithPopup({
+        ...initOptions,
+        ...params,
+      });
+      const curUser = await auth0Client.getUser();
+      setUser(curUser);
+      setStoreUser(curUser);
+      setIsAuthenticated(true);
+      saveToken(auth0Client);
     } catch (error) {
-      console.error(error);
+      // setPopupOpen(false);
     } finally {
       setPopupOpen(false);
     }
-    const curUser = await auth0Client.getUser();
-    setUser(curUser);
-    setStoreUser(curUser);
-    setIsAuthenticated(true);
   };
 
   const handleRedirectCallback = async () => {
     setLoading(true);
     await auth0Client.handleRedirectCallback();
     const curUser = await auth0Client.getUser();
-    setLoading(false);
-    setIsAuthenticated(true);
+
+    saveToken(auth0Client);
     setUser(curUser);
     setStoreUser(curUser);
+
+    setIsAuthenticated(true);
+    setLoading(false);
   };
+
   return (
     <Auth0Context.Provider
       value={{
@@ -108,6 +132,7 @@ Auth0Provider.propTypes = {
   setStoreUser: PropTypes.func,
   setIsAuthenticated: PropTypes.func,
   isAuthenticated: PropTypes.bool,
+  setAuthToken: PropTypes.func,
 };
 
 Auth0Provider.defaultProps = {
@@ -116,6 +141,7 @@ Auth0Provider.defaultProps = {
   setStoreUser: () => {},
   setIsAuthenticated: () => {},
   isAuthenticated: false,
+  setAuthToken: () => {},
 };
 
 const withConnect = connect(

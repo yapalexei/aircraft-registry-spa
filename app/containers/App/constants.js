@@ -12,3 +12,8 @@
 // export const LOAD_REPOS = 'boilerplate/App/LOAD_REPOS';
 export const SET_USER = 'airegister/App/SET_USER';
 export const SET_IS_AUTHENTICATED = 'airegister/App/SET_IS_AUTHENTICATED';
+export const FETCH_COLLECTION = 'airegister/App/FETCH_COLLECTION';
+export const GOT_COLLECTION = 'airegister/App/GOT_COLLECTION';
+export const FAILED_FETCH_COLLECTION = 'airegister/App/FAILED_FETCH_COLLECTION';
+export const SET_TOKEN = 'airegister/App/TOKEN_SET';
+export const CLEAR_COLLECTION = 'airegister/App/CLEAR_COLLECTION';

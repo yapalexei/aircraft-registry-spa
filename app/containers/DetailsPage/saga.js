@@ -3,19 +3,21 @@
  */
 
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { FETCH_COLLECTION } from '../App/constants';
-import { gotCollection, failedToGetCollection } from '../App/actions';
+import { FETCH_DETAILS } from './constants';
+import { failedFetchingDetailsAction, gotDetailsAction } from './actions';
 
 import request from '../../utils/request';
-import { makeSelectCollectionName, makeSelectToken } from '../App/selectors';
+import { makeSelectToken } from '../App/selectors';
 
 /**
  * Github repos request/response handler
  */
-export function* getCollection() {
-  const collectionName = yield select(makeSelectCollectionName());
+export function* getDetails(action) {
+  const { id, detailsType, privilaged } = action;
   const token = yield select(makeSelectToken());
-  const requestURL = `http://localhost:3000/api/v1/${collectionName}`;
+  const requestURL = `http://localhost:3000/api/v1/${detailsType}/${id}${
+    privilaged ? '/privilaged/' : ''
+  }`;
   try {
     const collection = yield call(request, requestURL, {
       method: 'GET',
@@ -24,9 +26,9 @@ export function* getCollection() {
         Authorization: `bearer ${token}`,
       },
     });
-    yield put(gotCollection(collection));
+    yield put(gotDetailsAction(collection));
   } catch (err) {
-    yield put(failedToGetCollection(err.message));
+    yield put(failedFetchingDetailsAction(err.message));
   }
 }
 
@@ -34,9 +36,9 @@ export function* getCollection() {
  * Root saga manages watcher lifecycle
  */
 export default function* airregistryData() {
-  // Watches for FETCH_COLLECTION actions and calls getCollection when one comes in.
+  // Watches for FETCH_DETAILS actions and calls getDetails when one comes in.
   // By using `takeLatest` only the result of the latest API call is applied.
   // It returns task descriptor (just like fork) so we can continue execution
   // It will be cancelled automatically on component unmount
-  yield takeLatest(FETCH_COLLECTION, getCollection);
+  yield takeLatest(FETCH_DETAILS, getDetails);
 }
