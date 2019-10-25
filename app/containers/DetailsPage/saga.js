@@ -15,9 +15,9 @@ import { makeSelectToken } from '../App/selectors';
 export function* getDetails(action) {
   const { id, detailsType, privilaged } = action;
   const token = yield select(makeSelectToken());
-  const requestURL = `http://localhost:3000/api/v1/${detailsType}/${id}${
-    privilaged ? '/privilaged/' : ''
-  }`;
+  const requestURL = `${window.location.protocol}//${window.location.hostname}${
+    window.location.port ? `:${window.location.port}` : ''
+  }/api/v1/${detailsType}/${id}${privilaged ? '/privileged' : ''}`;
   try {
     const collection = yield call(request, requestURL, {
       method: 'GET',

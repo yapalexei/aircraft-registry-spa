@@ -22,7 +22,7 @@ export const collectionTypes = [
   {
     label: 'Aircraft',
     value: 'aircrafts',
-    single: 'aircraft',
+    single: 'aircrafts',
   },
   {
     label: 'Contacts',

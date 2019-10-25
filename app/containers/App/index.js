@@ -65,14 +65,16 @@ export default function App() {
           />
           <Route
             exact
-            path="/aircraft/:uuid"
-            component={props => <DetailsPage routeType="aircraft" {...props} />}
+            path="/aircrafts/:uuid"
+            component={props => (
+              <DetailsPage routeType="aircrafts" {...props} />
+            )}
           />
           <Route
             exact
-            path="/aircraft/:uuid/privilaged"
+            path="/aircrafts/:uuid/privilaged"
             component={props => (
-              <DetailsPage privilaged routeType="aircraft" {...props} />
+              <DetailsPage privilaged routeType="aircrafts" {...props} />
             )}
           />
           <Route

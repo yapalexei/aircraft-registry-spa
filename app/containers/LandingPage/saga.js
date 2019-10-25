@@ -15,7 +15,9 @@ import { makeSelectCollectionName, makeSelectToken } from '../App/selectors';
 export function* getCollection() {
   const collectionName = yield select(makeSelectCollectionName());
   const token = yield select(makeSelectToken());
-  const requestURL = `http://localhost:3000/api/v1/${collectionName}`;
+  const requestURL = `${window.location.protocol}//${window.location.hostname}${
+    window.location.port ? `:${window.location.port}` : ''
+  }/api/v1/${collectionName}`;
   try {
     const collection = yield call(request, requestURL, {
       method: 'GET',
