@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /*
  * LandingPage
  *
@@ -303,11 +304,11 @@ export function LandingPage({
                           size="small"
                           onClick={() =>
                             props.history.push(
-                              `/${collectionType.single}/${item.id}/privilaged`,
+                              `/${collectionType.single}/${item.id}/privileged`,
                             )
                           }
                         >
-                          Details (Privilaged)
+                          Details (privileged)
                         </Button>
                       </CardActions>
                       {/* </CardActionArea> */}

@@ -58,9 +58,9 @@ export default function App() {
           />
           <Route
             exact
-            path="/operators/:uuid/privilaged"
+            path="/operators/:uuid/privileged"
             component={props => (
-              <DetailsPage privilaged routeType="operators" {...props} />
+              <DetailsPage privileged routeType="operators" {...props} />
             )}
           />
           <Route
@@ -72,9 +72,9 @@ export default function App() {
           />
           <Route
             exact
-            path="/aircrafts/:uuid/privilaged"
+            path="/aircrafts/:uuid/privileged"
             component={props => (
-              <DetailsPage privilaged routeType="aircrafts" {...props} />
+              <DetailsPage privileged routeType="aircrafts" {...props} />
             )}
           />
           <Route
@@ -84,9 +84,9 @@ export default function App() {
           />
           <Route
             exact
-            path="/contacts/:uuid/privilaged"
+            path="/contacts/:uuid/privileged"
             component={props => (
-              <DetailsPage privilaged routeType="contacts" {...props} />
+              <DetailsPage privileged routeType="contacts" {...props} />
             )}
           />
           <Route
@@ -96,9 +96,9 @@ export default function App() {
           />
           <Route
             exact
-            path="/pilots/:uuid/privilaged"
+            path="/pilots/:uuid/privileged"
             component={props => (
-              <DetailsPage privilaged routeType="pilots" {...props} />
+              <DetailsPage privileged routeType="pilots" {...props} />
             )}
           />
           <Route path="" component={NotFoundPage} />

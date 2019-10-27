@@ -13,11 +13,11 @@ import { makeSelectToken } from '../App/selectors';
  * Github repos request/response handler
  */
 export function* getDetails(action) {
-  const { id, detailsType, privilaged } = action;
+  const { id, detailsType, privileged } = action;
   const token = yield select(makeSelectToken());
   const requestURL = `${window.location.protocol}//${window.location.hostname}${
     window.location.port ? `:${window.location.port}` : ''
-  }/api/v1/${detailsType}/${id}${privilaged ? '/privileged' : ''}`;
+  }/api/v1/${detailsType}/${id}${privileged ? '/privileged' : ''}`;
   try {
     const collection = yield call(request, requestURL, {
       method: 'GET',

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /*
  * LandingPage
  *
@@ -18,12 +19,12 @@ import {
   Menu,
   MenuItem,
   Box,
-  Paper,
   Breadcrumbs,
-  Link,
   Typography,
   Hidden,
   Divider,
+  Card,
+  Button,
 } from '@material-ui/core';
 
 import { useInjectReducer } from 'utils/injectReducer';
@@ -83,7 +84,7 @@ export function LandingPage({
   isFetchingDetails,
   details,
   fetchingIssue,
-  privilaged,
+  privileged,
   user,
   ...props
 }) {
@@ -95,7 +96,7 @@ export function LandingPage({
   const classes = useStyles();
 
   useEffect(() => {
-    getDetails(routeType, props.match.params.uuid, privilaged);
+    getDetails(routeType, props.match.params.uuid, privileged);
   }, []);
 
   function handleMenu(event) {
@@ -118,9 +119,9 @@ export function LandingPage({
             <Box style={{ width: 40 }} xs="hidden" />
           </Hidden>
           <Breadcrumbs>
-            <Link color="inherit" onClick={() => props.history.push('/')}>
+            <Button color="inherit" onClick={() => props.history.push('/')}>
               Search Page
-            </Link>
+            </Button>
             <Typography color="textPrimary">{routeType}</Typography>
             <Typography color="textPrimary" title={props.match.params.uuid}>
               UUID
@@ -174,7 +175,7 @@ export function LandingPage({
         justifyContent={isPristine ? 'center' : 'flex-start'}
         className={classes.container}
       >
-        <Paper elevation={4} className={classes.paper}>
+        <Card elevation={4} className={classes.paper}>
           {fetchingIssue && (
             <>
               <Typography color="textSecondary" gutterBottom>
@@ -188,7 +189,7 @@ export function LandingPage({
             </>
           )}
           {details && <DetailsCard {...details} />}
-        </Paper>
+        </Card>
       </Box>
     </Box>
   );
@@ -202,7 +203,7 @@ LandingPage.propTypes = {
   getDetails: PropTypes.func,
   isPristine: PropTypes.bool,
   fetchingIssue: PropTypes.string,
-  privilaged: PropTypes.bool,
+  privileged: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -215,8 +216,8 @@ const mapStateToProps = createStructuredSelector({
 
 export function mapDispatchToProps(dispatch) {
   return {
-    getDetails: (type, uuid, privilaged) =>
-      dispatch(fetchDetailsAction(type, uuid, privilaged)),
+    getDetails: (type, uuid, privileged) =>
+      dispatch(fetchDetailsAction(type, uuid, privileged)),
   };
 }
 

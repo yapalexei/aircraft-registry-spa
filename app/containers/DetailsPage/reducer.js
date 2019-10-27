@@ -19,7 +19,7 @@ export const initialState = {
   isFetching: true,
   reason: null,
   data: null,
-  privilaged: false,
+  privileged: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -29,7 +29,7 @@ const landingReducer = (state = initialState, action) =>
       case FETCH_DETAILS:
         draft.isFetching = true;
         draft.detailsType = action.detailsType;
-        draft.privilaged = action.privilaged;
+        draft.privileged = action.privileged;
         draft.detailsId = action.id;
         draft.reason = null;
         draft.data = null;

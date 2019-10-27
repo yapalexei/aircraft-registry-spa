@@ -20,12 +20,12 @@ import {
   GOT_DETAILS,
 } from './constants';
 
-export function fetchDetailsAction(detailsType, id, privilaged) {
+export function fetchDetailsAction(detailsType, id, privileged) {
   return {
     type: FETCH_DETAILS,
     detailsType,
     id,
-    privilaged,
+    privileged,
   };
 }
 
