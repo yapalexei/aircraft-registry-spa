@@ -3,19 +3,16 @@ module.exports = {
   clientId: process.env.clientId,
   audience: process.env.audience,
   scopes: [
-    "registry.read.operator",
-    "registry.read.address",
-    "registry.read.person",
-    "registry.read.contact",
-    "registry.read.pilot",
-    "registry.read.aircraft",
-    "registry.read.authorization",
-    "registry.read.activity",
-    "registry.read.privileged",
-    "registry.read.privileged",
-    "registry.read.privileged",
-    "registry.read.privileged",
-    "registry.read.privileged"
+      "registry.read.operator",
+      "registry.read.operator_detail",
+      "registry.read.operator_detail.privileged",
+      "registry.read.contact_detail",
+      "registry.read.contact_detail.privileged",
+      "registry.read.pilot",
+      "registry.read.pilot_detail",
+      "registry.read.aircraft",
+      "registry.read.aircraft_detail",
+      "registry.read.aircraft_detail.privileged"
 ]
 ,
 };
