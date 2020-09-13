@@ -10,6 +10,7 @@ module.exports = {
       "registry.read.contact_detail.privileged",
       "registry.read.pilot",
       "registry.read.pilot_detail",
+      "registry.read.pilot_detail.privileged",
       "registry.read.aircraft",
       "registry.read.aircraft_detail",
       "registry.read.aircraft_detail.privileged"
